@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow p-4">
+
+                <h2 class="text-center mb-4">
+                    Book Appointment
+                </h2>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        {{ form.patient_name.label }}
+                        {{ form.patient_name }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.phone.label }}
+                        {{ form.phone }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.email.label }}
+                        {{ form.email }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.age.label }}
+                        {{ form.age }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.gender.label }}
+                        {{ form.gender }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.problem.label }}
+                        {{ form.problem }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.appointment_date.label }}
+                        {{ form.appointment_date }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.appointment_time.label }}
+                        {{ form.appointment_time }}
+                    </div>
+
+                    <button class="btn btn-primary w-100">
+                        Submit Appointment
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

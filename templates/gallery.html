@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="gallery-page py-5">
+
+    <div class="container">
+
+        <!-- TITLE -->
+
+        <div class="text-center mb-5">
+
+            <h5 class="gallery-subtitle">
+                OUR GALLERY
+            </h5>
+
+            <h1 class="gallery-title">
+
+                Clinic Photo Gallery
+
+            </h1>
+
+            <p class="text-muted">
+
+                Explore our clinic, treatments,
+                patient care and rehabilitation moments.
+
+            </p>
+
+        </div>
+
+        <!-- GALLERY GRID -->
+
+        <div class="row g-4">
+
+            <!-- IMAGE 1 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+                    <img src="/static/images/gallery/1.jpg"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+
+                </div>
+
+            </div>
+
+            <!-- IMAGE 2 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+                    <img src="/static/images/gallery/2.jpg"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+
+                          
+                </div>
+
+            </div>
+
+            <!-- IMAGE 3 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+                    <img src="/static/images/gallery/3.jpg"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+
+                </div>
+
+            </div>
+
+            <!-- IMAGE 4 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+                    <img src="/static/images/gallery/4.jpg"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+                </div>
+
+            </div>
+
+            <!-- IMAGE 5 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+                    <img src="/static/images/gallery/5.jpg"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+                </div>
+
+            </div>
+
+            <!-- IMAGE 6 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+                    <img src="/static/images/gallery/6.jpg"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+
+                </div>
+
+            </div>
+
+            <!-- IMAGE 7 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+                    <img src="/static/images/gallery/7.jpeg"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+
+                </div>
+
+            </div>
+
+            <!-- IMAGE 8 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+                    <img src="/static/images/gallery/8.png"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+                </div>
+
+            </div>
+
+            <!-- IMAGE 9 -->
+
+            <div class="col-md-4">
+
+                <div class="gallery-box">
+<img src="/static/images/gallery/9.jpg"
+     class="gallery-photo"
+     onclick="openImage(this.src)">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- IMAGE POPUP -->
+
+<div id="imagePopup"
+     class="image-popup">
+
+    <!-- CLOSE BUTTON -->
+
+    <span class="close-popup"
+          onclick="closeImage()">
+
+          &times;
+
+    </span>
+
+    <!-- BIG IMAGE -->
+
+    <img id="popupImage"
+         class="popup-image">
+
+</div>
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+function openImage(src){
+
+    document.getElementById(
+    'imagePopup').style.display = 'flex';
+
+    document.getElementById(
+    'popupImage').src = src;
+}
+
+function closeImage(){
+
+    document.getElementById(
+    'imagePopup').style.display = 'none';
+}
+
+</script>
+{% endblock %}

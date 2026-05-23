@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="login-section d-flex align-items-center justify-content-center">
+
+    <div class="login-card">
+
+        <!-- TITLE -->
+
+        <div class="text-center mb-4">
+
+            <h1 class="login-title">
+
+                Doctor Login
+
+            </h1>
+
+        </div>
+
+        <!-- ERROR MESSAGE -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="alert alert-danger">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+        <!-- FORM -->
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <!-- USERNAME -->
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Username
+
+                </label>
+
+                <input type="text"
+                       name="username"
+                       class="form-control login-input"
+                       required>
+
+            </div>
+
+            <!-- PASSWORD -->
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Password
+
+                </label>
+
+                <div class="password-box">
+
+                    <input type="password"
+                           name="password"
+                           id="password"
+                           class="form-control login-input"
+                           required>
+
+                    <!-- EYE ICON -->
+
+                    <span class="toggle-password"
+                          onclick="togglePassword()">
+
+                        👁️
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <button type="submit"
+                    class="btn login-btn-premium w-100">
+
+                Login
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<!-- PASSWORD JS -->
+
+<script>
+
+function togglePassword(){
+
+    const password =
+    document.getElementById('password');
+
+    if(password.type === 'password'){
+
+        password.type = 'text';
+
+    }else{
+
+        password.type = 'password';
+    }
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,523 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- SIDEBAR -->
+
+        <div class="col-md-2 bg-dark text-white min-vh-100 p-3">
+
+            <h2 class="text-center fw-bold mb-5">
+
+                Doctor Panel
+
+            </h2>
+
+            <ul class="nav flex-column">
+
+                <li class="nav-item mb-3">
+
+                    <a href="/dashboard/"
+                       class="nav-link text-white fw-semibold">
+
+                       <i class="bi bi-speedometer2"></i>
+                       Dashboard
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item mb-3">
+
+                    <a href="/appointments/records/"
+                       class="nav-link text-info fw-semibold">
+
+                       <i class="bi bi-folder"></i>
+                       Appointment History
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item mb-3">
+
+                    <a href="/logout/"
+                       class="nav-link text-danger fw-semibold">
+
+                       <i class="bi bi-box-arrow-right"></i>
+                       Logout
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- MAIN CONTENT -->
+
+        <div class="col-md-10 p-4">
+
+            <h1 class="fw-bold mb-4">
+
+                Welcome Dr. {{ user.username }}
+
+            </h1>
+
+            <!-- FIRST ROW CARDS -->
+
+            <div class="row g-4">
+
+                <!-- TOTAL -->
+
+                <div class="col-md-4">
+
+                    <div class="card shadow border-0 bg-primary text-white p-4"
+                         onclick="filterAppointments('all')"
+                         style="cursor:pointer; border-radius:20px;">
+
+                        <h5 class="fw-semibold">
+
+                            Total Appointments
+
+                        </h5>
+
+                        <h1 class="display-4 fw-bold">
+
+                            {{ total_appointments }}
+
+                        </h1>
+
+                    </div>
+
+                </div>
+
+                <!-- TODAY -->
+
+                <div class="col-md-4">
+
+                    <div class="card shadow border-0 bg-success text-white p-4"
+                         onclick="filterAppointments('today')"
+                         style="cursor:pointer; border-radius:20px;">
+
+                        <h5 class="fw-semibold">
+
+                            Today's Appointments
+
+                        </h5>
+
+                        <h1 class="display-4 fw-bold">
+
+                            {{ today_appointments }}
+
+                        </h1>
+
+                    </div>
+
+                </div>
+
+                <!-- PENDING -->
+
+                <div class="col-md-4">
+
+                    <div class="card shadow border-0 bg-warning text-dark p-4"
+                         onclick="filterAppointments('Pending')"
+                         style="cursor:pointer; border-radius:20px;">
+
+                        <h5 class="fw-semibold">
+
+                            Pending Appointments
+
+                        </h5>
+
+                        <h1 class="display-4 fw-bold">
+
+                            {{ pending_appointments }}
+
+                        </h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SECOND ROW CARDS -->
+
+            <div class="row g-4 mt-4">
+
+                <!-- APPROVED -->
+
+                <div class="col-md-4">
+
+                    <div class="card shadow border-0 text-white p-5 h-100"
+                         onclick="filterAppointments('Approved')"
+                         style="
+                            background: linear-gradient(135deg,#11998e,#38ef7d);
+                            cursor:pointer;
+                            border-radius:20px;
+                         ">
+
+                        <h5 class="fw-semibold">
+
+                            Approved Appointments
+
+                        </h5>
+
+                        <h1 class="display-4 fw-bold">
+
+                            {{ approved_appointments }}
+
+                        </h1>
+
+                    </div>
+
+                </div>
+
+                <!-- REJECTED -->
+
+                <div class="col-md-4">
+
+                    <div class="card shadow border-0 text-white p-5 h-100"
+                         onclick="filterAppointments('Rejected')"
+                         style="
+                            background: linear-gradient(135deg,#cb2d3e,#ef473a);
+                            cursor:pointer;
+                            border-radius:20px;
+                         ">
+
+                        <h5 class="fw-semibold">
+
+                            Rejected Appointments
+
+                        </h5>
+
+                        <h1 class="display-4 fw-bold">
+
+                            {{ rejected_appointments }}
+
+                        </h1>
+
+                    </div>
+
+                </div>
+
+                <!-- UPDATED -->
+
+                <div class="col-md-4">
+
+                    <div class="card shadow border-0 text-white p-5 h-100"
+                         onclick="filterAppointments('Updated')"
+                         style="
+                            background: linear-gradient(135deg,#8E2DE2,#4A00E0);
+                            cursor:pointer;
+                            border-radius:20px;
+                         ">
+
+                        <h5 class="fw-semibold">
+
+                            Modified Appointments
+
+                        </h5>
+
+                        <h1 class="display-4 fw-bold">
+
+                            {{ updated_appointments }}
+
+                        </h1>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- APPOINTMENT TABLE -->
+
+            <div class="card shadow border-0 rounded-4 mt-5 p-4">
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+                    <h3 class="fw-bold">
+
+                        Appointments
+
+                    </h3>
+
+                    <input type="text"
+                           id="searchInput"
+                           class="form-control w-25"
+                           placeholder="Search Patient">
+
+                </div>
+
+                <div class="table-responsive mt-4">
+
+                    <table class="table table-hover align-middle"
+                           id="appointmentTable">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for appointment in appointments %}
+
+                            <tr class="appointment-row"
+                                data-status="{{ appointment.status }}"
+                                data-date="{{ appointment.appointment_date|date:'Y-m-d' }}">
+
+                                <td class="fw-semibold">
+
+                                    {{ appointment.patient_name }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ appointment.phone }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ appointment.appointment_date }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ appointment.appointment_time }}
+
+                                </td>
+
+                                <td>
+
+                                    {% if appointment.status == 'Approved' %}
+
+                                    <span class="badge bg-success p-2">
+
+                                        Approved
+
+                                    </span>
+
+                                    {% elif appointment.status == 'Rejected' %}
+
+                                    <span class="badge bg-danger p-2">
+
+                                        Rejected
+
+                                    </span>
+
+                                    {% elif appointment.status == 'Updated' %}
+
+                                    <span class="badge bg-primary p-2">
+
+                                        Updated
+
+                                    </span>
+
+                                    {% else %}
+
+                                    <span class="badge bg-warning text-dark p-2">
+
+                                        Pending
+
+                                    </span>
+
+                                    {% endif %}
+
+                                </td>
+                                <td>
+
+    <div class="d-flex gap-2 flex-wrap">
+
+        <!-- APPROVE -->
+
+        <a href="/appointments/approve/{{ appointment.id }}/"
+           class="btn btn-success btn-sm rounded-pill px-3">
+
+           Approve
+
+        </a>
+
+        <!-- REJECT -->
+
+        <button
+            type="button"
+            class="btn btn-warning btn-sm rounded-pill px-3"
+            onclick="event.stopPropagation(); rejectAppointment('{{ appointment.id }}')">
+
+            Reject
+
+        </button>
+
+        <!-- EDIT -->
+
+        <a href="/appointments/edit/{{ appointment.id }}/"
+           class="btn btn-primary btn-sm rounded-pill px-3">
+
+           Edit
+
+        </a>
+
+        <!-- DELETE -->
+
+        <a href="/appointments/delete/{{ appointment.id }}/"
+           class="btn btn-danger btn-sm rounded-pill px-3">
+
+           Delete
+
+        </a>
+
+    </div>
+
+</td>
+
+                                
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SEARCH SCRIPT -->
+
+<script>
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function() {
+
+    const filter = searchInput.value.toLowerCase();
+
+    const rows = document.querySelectorAll(
+        "#appointmentTable tbody tr"
+    );
+
+    rows.forEach(row => {
+
+        const text = row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(filter)
+            ? ""
+            : "none";
+
+    });
+
+});
+
+</script>
+
+<!-- FILTER SCRIPT -->
+
+<script>
+
+function filterAppointments(type) {
+
+    let rows = document.querySelectorAll('.appointment-row');
+
+    let today = new Date().toISOString().split('T')[0];
+
+    rows.forEach(row => {
+
+        let status = row.dataset.status;
+
+        let date = row.dataset.date;
+
+        if (type === 'all') {
+
+            row.style.display = '';
+
+        }
+
+        else if (type === 'today') {
+
+            if (date === today) {
+
+                row.style.display = '';
+
+            }
+
+            else {
+
+                row.style.display = 'none';
+
+            }
+
+        }
+
+        else {
+
+            if (status === type) {
+
+                row.style.display = '';
+
+            }
+
+            else {
+
+                row.style.display = 'none';
+
+            }
+
+        }
+
+    });
+
+}
+
+</script>
+
+<!-- REJECT SCRIPT -->
+
+<script>
+
+function rejectAppointment(id) {
+
+    let reason = prompt(
+        "Enter rejection reason:"
+    );
+
+    if (reason != null && reason != "") {
+
+        window.location.href =
+        `/appointments/reject/${id}/?reason=${reason}`;
+
+    }
+
+}
+
+</script>
+
+{% endblock %}

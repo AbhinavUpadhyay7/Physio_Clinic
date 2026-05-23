@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold">
+                Patient Records
+            </h1>
+
+            <p class="text-muted">
+                Complete appointment history
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Patient Name</th>
+
+                            <th>Phone</th>
+
+                            <th>Problem</th>
+
+                            <th>Date</th>
+
+                            <th>Time</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for appointment in appointments %}
+
+                        <tr>
+
+                            <td>
+                                #{{ appointment.id }}
+                            </td>
+
+                            <td class="fw-bold">
+                                {{ appointment.patient_name }}
+                            </td>
+
+                            <td>
+                                {{ appointment.phone }}
+                            </td>
+
+                            <td>
+                                {{ appointment.problem }}
+                            </td>
+
+                            <td>
+                                {{ appointment.appointment_date }}
+                            </td>
+
+                            <td>
+                                {{ appointment.appointment_time }}
+                            </td>
+
+                            <td>
+
+                                {% if appointment.status == 'Approved' %}
+
+                                <span class="badge bg-success">
+
+                                    Approved
+
+                                </span>
+
+                                {% elif appointment.status == 'Pending' %}
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Pending
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-danger">
+
+                                    Rejected
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="7"
+                                class="text-center py-5">
+
+                                No Records Found
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
