@@ -166,10 +166,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 
-from django.contrib.auth.models import User
-
-try:
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser('admin', 'admin@gmail.com', 'Admin@123')
-except:
-    pass
